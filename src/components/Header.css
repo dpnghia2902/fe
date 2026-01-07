@@ -1,11 +1,253 @@
 .header {
-  background: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
-  padding: 16px 24px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0 20px;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
 }
 
 .logo {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00D4B8 0%, #ab64f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  cursor: pointer;
   margin: 0;
-  font-size: 20px;
+  transition: transform 0.2s;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Auth Buttons (Login/Register) */
+.auth-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-login,
+.btn-register {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+}
+
+.btn-login {
+  background: transparent;
+  color: #00D4B8;
+  border: 2px solid #00D4B8;
+}
+
+.btn-login:hover {
+  background: #00D4B8;
+  color: white;
+}
+
+.btn-register {
+  background: linear-gradient(135deg, #00D4B8 0%, #ab64f1 100%);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.btn-register:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 212, 184, 0.3);
+}
+
+/* Navigation Menu (Logged In) */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-item {
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  color: #4a5568;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-item:hover {
+  background: #f7fafc;
+  color: #00D4B8;
+}
+
+/* Notification Badge */
+.notification-item {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: #f56565;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dropdown-icon {
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 200px;
+  padding: 8px;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  width: 100%;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  color: #4a5568;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background: #f7fafc;
+  color: #00D4B8;
+}
+
+.dropdown-item.logout {
+  color: #f56565;
+}
+
+.dropdown-item.logout:hover {
+  background: #fff5f5;
+  color: #e53e3e;
+}
+
+.dropdown-item svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 16px;
+  }
+
+  .header-container {
+    height: 56px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .nav-menu {
+    gap: 4px;
+  }
+
+  .nav-item {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .btn-login,
+  .btn-register {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-buttons {
+    gap: 8px;
+  }
+
+  .btn-login,
+  .btn-register {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .nav-item {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .dropdown-menu {
+    min-width: 180px;
+  }
 }
