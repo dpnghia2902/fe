@@ -1,6 +1,19 @@
-.hero-content {
-  max-width: 768px;
+.hero-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.hero-section > div {
+  background: linear-gradient(135deg, #00BFA6 0%, #00D4B8 100%);
+  border-radius: 24px;
+  padding: 48px;
   color: white;
+  box-shadow: 0 10px 40px rgba(0, 191, 166, 0.2);
+}
+
+.hero-content-wrapper {
+  max-width: 768px;
 }
 
 .hero-header {
@@ -35,34 +48,32 @@
 }
 
 /* Search Bar */
-.search-bar {
+.search-bar-wrapper {
   background: white;
   border-radius: 16px;
   padding: 8px;
   display: flex;
-  flex-direction: row;
   gap: 8px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 }
 
-.search-input-wrapper,
-.location-input-wrapper {
+.search-input-group,
+.location-input-group {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 0 16px;
 }
 
-.search-input-wrapper {
+.search-input-group {
   flex: 1;
 }
 
-.location-input-wrapper {
+.location-input-group {
   border-left: 1px solid #e2e8f0;
 }
 
-.search-icon,
-.location-icon {
+.input-icon {
   width: 20px;
   height: 20px;
   color: #9ca3af;
@@ -89,7 +100,7 @@
   width: 160px;
 }
 
-.search-button {
+.search-submit-btn {
   background: #00BFA6;
   color: white;
   border: none;
@@ -102,31 +113,25 @@
   white-space: nowrap;
 }
 
-.search-button:hover {
+.search-submit-btn:hover {
   background: #00A88F;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 191, 166, 0.3);
 }
 
-.search-button:active {
+.search-submit-btn:active {
   transform: translateY(0);
 }
 
 /* Responsive - Tablet */
 @media (max-width: 768px) {
   .hero-section {
+    padding: 12px;
+  }
+
+  .hero-section > div {
+    padding: 32px 24px;
     border-radius: 20px;
-    padding: 32px;
-    margin-bottom: 24px;
-  }
-
-  .sparkle-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .welcome-text {
-    font-size: 13px;
   }
 
   .hero-title {
@@ -138,11 +143,11 @@
     margin-bottom: 24px;
   }
 
-  .search-bar {
+  .search-bar-wrapper {
     flex-direction: column;
   }
 
-  .location-input-wrapper {
+  .location-input-group {
     border-left: none;
     border-top: 1px solid #e2e8f0;
     padding-top: 12px;
@@ -152,34 +157,19 @@
     width: 100%;
   }
 
-  .search-button {
+  .search-submit-btn {
     width: 100%;
   }
 }
 
 /* Responsive - Mobile */
 @media (max-width: 480px) {
-  .hero-section {
-    border-radius: 16px;
-    padding: 24px;
-  }
-
-  .hero-header {
-    margin-bottom: 12px;
-  }
-
-  .sparkle-icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .welcome-text {
-    font-size: 12px;
+  .hero-section > div {
+    padding: 24px 16px;
   }
 
   .hero-title {
     font-size: 24px;
-    margin-bottom: 12px;
   }
 
   .hero-description {
@@ -187,18 +177,12 @@
     margin-bottom: 20px;
   }
 
-  .search-icon,
-  .location-icon {
-    width: 18px;
-    height: 18px;
-  }
-
   .search-input,
   .location-input {
     font-size: 14px;
   }
 
-  .search-button {
+  .search-submit-btn {
     padding: 10px 24px;
     font-size: 14px;
   }

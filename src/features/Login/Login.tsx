@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext"; // Thêm import
 import Container from "../../components/Container";
 import "./Login.css";
 
@@ -17,6 +19,8 @@ interface FormData {
 }
 
 export default function AuthForm() {
+  const navigate = useNavigate(); // Thêm navigate
+  const { login } = useAuth(); // Thêm Auth Context
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -92,13 +96,28 @@ export default function AuthForm() {
 
     setIsSubmitting(true);
     
+    // Mô phỏng API call
     setTimeout(() => {
-      console.log(isLogin ? "Đăng nhập" : "Đăng ký", formData);
-      alert(
-        isLogin
-          ? `Đăng nhập thành công với email: ${formData.email}`
-          : `Đăng ký thành công! Chào mừng ${formData.name}`
-      );
+      if (isLogin) {
+        // Đăng nhập
+        login({
+          email: formData.email,
+          name: formData.email.split('@')[0], // Lấy tên từ email
+        });
+        
+        alert(`Đăng nhập thành công với email: ${formData.email}`);
+        navigate('/'); // Redirect về trang chủ
+      } else {
+        // Đăng ký - Sau khi đăng ký xong, tự động login
+        login({
+          email: formData.email,
+          name: formData.name || formData.email.split('@')[0],
+        });
+        
+        alert(`Đăng ký thành công! Chào mừng ${formData.name}`);
+        navigate('/'); // Redirect về trang chủ
+      }
+      
       setIsSubmitting(false);
     }, 1500);
   };

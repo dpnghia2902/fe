@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import "./Header.css";
 
 export default function Header() {
   const navigate = useNavigate();
-  // Thay đổi thành true để test trạng thái đã đăng nhập
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, logout, login } = useAuth(); // Thêm login
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const handleLogin = () => {
@@ -17,10 +17,10 @@ export default function Header() {
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    logout();
     setShowProfileMenu(false);
-    // Thêm logic logout: clear token, redirect, etc.
     alert("Đã đăng xuất thành công!");
+    navigate("/");
   };
 
   const toggleProfileMenu = () => {
@@ -32,6 +32,17 @@ export default function Header() {
     setShowProfileMenu(false);
   };
 
+  // BUTTON TEST - Xóa sau khi có API
+  const handleTestToggle = () => {
+    if (isLoggedIn) {
+      logout();
+      alert("Test: Đã logout!");
+    } else {
+      login({ email: 'test@gmail.com', name: 'Test User' });
+      alert("Test: Đã login!");
+    }
+  };
+
   return (
     <header className="header">
       <div className="header-container">
@@ -40,6 +51,24 @@ export default function Header() {
         </h2>
 
         <nav className="header-nav">
+          {/* BUTTON TEST - Thêm vào đây */}
+          <button 
+            onClick={handleTestToggle}
+            style={{
+              padding: '8px 16px',
+              background: isLoggedIn ? '#ef4444' : '#10b981',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontWeight: '600',
+              fontSize: '14px',
+              marginRight: '16px'
+            }}
+          >
+            {isLoggedIn ? '🔓 Test Logout' : '🔐 Test Login'}
+          </button>
+
           {!isLoggedIn ? (
             // Chưa đăng nhập - hiển thị nút Login và Register
             <div className="auth-buttons">

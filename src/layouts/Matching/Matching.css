@@ -1,0 +1,145 @@
+.matching-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 48px 16px;
+}
+
+.matching-card {
+  background: white;
+  border-radius: 24px;
+  padding: 48px 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.matching-header {
+  margin-bottom: 32px;
+}
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  color: #10b981;
+  margin: 0 auto 16px;
+}
+
+.matching-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 8px;
+}
+
+.matching-subtitle {
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.matching-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.loading-animation {
+  padding: 32px;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #00BFA6;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-animation p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.matching-info {
+  background: #f9fafb;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: left;
+}
+
+.matching-info h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 16px;
+}
+
+.matching-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.matching-info li {
+  font-size: 14px;
+  color: #4b5563;
+  padding-left: 8px;
+}
+
+.matching-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-secondary-outline {
+  padding: 12px 24px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary-outline:hover {
+  border-color: #00BFA6;
+  color: #00BFA6;
+}
+
+.btn-primary-solid {
+  padding: 12px 24px;
+  background: #00BFA6;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary-solid:hover {
+  background: #00A88F;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .matching-actions {
+    flex-direction: column;
+  }
+  
+  .btn-secondary-outline,
+  .btn-primary-solid {
+    width: 100%;
+  }
+}
