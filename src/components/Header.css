@@ -38,6 +38,77 @@
   gap: 12px;
 }
 
+/* ✅ TEST BUTTONS GROUP - Xóa sau khi dev xong */
+.test-buttons-group {
+  display: flex;
+  gap: 8px;
+  margin-right: 16px;
+  padding-right: 16px;
+  border-right: 2px solid #e2e8f0;
+}
+
+.test-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.test-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.test-btn:active {
+  transform: translateY(0);
+}
+
+/* Button colors */
+.test-btn.login {
+  background: #10b981;
+}
+
+.test-btn.login:hover {
+  background: #059669;
+}
+
+.test-btn.logout {
+  background: #ef4444;
+}
+
+.test-btn.logout:hover {
+  background: #dc2626;
+}
+
+.test-btn.to-worker {
+  background: #f59e0b;
+}
+
+.test-btn.to-worker:hover {
+  background: #d97706;
+}
+
+.test-btn.to-customer {
+  background: #8b5cf6;
+}
+
+.test-btn.to-customer:hover {
+  background: #7c3aed;
+}
+
+.test-btn.login-worker {
+  background: #8b5cf6;
+}
+
+.test-btn.login-worker:hover {
+  background: #7c3aed;
+}
+
 /* Auth Buttons (Login/Register) */
 .auth-buttons {
   display: flex;
@@ -104,23 +175,15 @@
   color: #00D4B8;
 }
 
-/* Notification Badge */
-.notification-item {
-  position: relative;
+/* ✅ Notification Integration */
+.nav-menu .notifications-wrapper {
+  display: flex;
+  align-items: center;
 }
 
-.notification-badge {
-  position: absolute;
-  top: 6px;
-  right: 10px;
-  background: #f56565;
-  color: white;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 10px;
-  min-width: 18px;
-  text-align: center;
+.nav-menu .notification-dropdown {
+  top: calc(100% + 12px);
+  right: 0;
 }
 
 /* Profile Dropdown */
@@ -215,6 +278,11 @@
     font-size: 20px;
   }
 
+  /* ✅ Hide test buttons on mobile */
+  .test-buttons-group {
+    display: none;
+  }
+
   .nav-menu {
     gap: 4px;
   }
@@ -228,6 +296,16 @@
   .btn-register {
     padding: 8px 16px;
     font-size: 13px;
+  }
+
+  .nav-menu .notification-dropdown {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: calc(100vh - 56px);
+    border-radius: 0;
   }
 }
 
@@ -249,5 +327,38 @@
 
   .dropdown-menu {
     min-width: 180px;
+  }
+}
+
+.nav-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Worker menu styling */
+.nav-menu .nav-item svg.nav-icon {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.nav-menu .nav-item:hover svg.nav-icon {
+  opacity: 1;
+}
+
+/* Responsive - Hide icons on small screens */
+@media (max-width: 768px) {
+  .nav-icon {
+    display: none;
+  }
+  
+  .nav-item {
+    gap: 0;
   }
 }

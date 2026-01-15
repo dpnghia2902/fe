@@ -8,6 +8,13 @@ import CreateTask from "../layouts/CreateTask/CreateTask";
 import MatchingWorkers from "../layouts/MatchingWorker/MatchingWorkers";
 import TrackTask from "../layouts/TrackTask/TrackTask";
 import CustomerProfile from "../layouts/CustomerProfile/CustomerProfile";
+import RatingFeedback from "../layouts/Rating/RatingFeedback";
+import PartnerRegister from "../features/Register/PartnerRegister";
+import WorkerDashboard from "../layouts/WorkerDashboard/WorkerDashboard";
+import JobList from "../layouts/WorkerDashboard/JobList";
+import CurrentJob from "../layouts/WorkerDashboard/CurrentJob";
+import WorkerEarnings from "../layouts/WorkerDashboard/WorkerEarnings";
+import WorkerProfile from "../layouts/WorkerDashboard/WorkerProfile";
 
 export const router = createBrowserRouter([
   {
@@ -18,12 +25,13 @@ export const router = createBrowserRouter([
         index: true, 
         element: <Home /> 
       },
+      // ✅ CUSTOMER ROUTES
       {
         path: "create",
         element: <CreateTask />
       },
       {
-        path: "matching",  // ← Chỉ giữ 1 route này
+        path: "matching",  
         element: <MatchingWorkers />
       },
       {
@@ -42,7 +50,36 @@ export const router = createBrowserRouter([
         path: "my-jobs",
         element: <TrackTask />
       },
+      {
+        path: "rating",
+        element: <RatingFeedback/>
+      },
       
+      // ✅ WORKER ROUTES
+      {
+        path: "worker-dashboard",
+        element: <WorkerDashboard />
+      },
+      {
+        path: "worker/jobs",
+        element: <JobList />
+      },
+      {
+        path: "worker/current",
+        element: <CurrentJob/>
+      },
+      {
+        path: "worker/earnings",
+        element: <WorkerEarnings/>
+      },
+      {
+        path: "worker/profile",
+        element: <WorkerProfile />
+      },
+      {
+        path: "worker/settings",
+        element: <div>Worker Settings (Coming Soon)</div>
+      },
     ],
   },
   {
@@ -56,5 +93,9 @@ export const router = createBrowserRouter([
   {
     path: "/forget-password",
     element: <ForgetPassword />
-  }
+  },
+  {
+    path: "/partner-register",
+    element: <PartnerRegister />
+  },
 ]);

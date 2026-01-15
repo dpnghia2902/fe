@@ -1,27 +1,35 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import type { ReactNode } from 'react'; // Thêm 'type' trước ReactNode
+import { createContext, useContext, useState } from 'react';
+import type { ReactNode } from 'react';
+
+// ✅ Định nghĩa type Role
+type UserRole = 'customer' | 'worker';
+
+interface User {
+  email: string;
+  name: string;
+  role: UserRole; // ✅ Dùng type alias
+}
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  user: any | null;
-  login: (userData: any) => void;
+  user: User | null;
+  login: (userData: User) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  // Đọc từ localStorage khi khởi tạo
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true';
   });
   
-  const [user, setUser] = useState(() => {
+  const [user, setUser] = useState<User | null>(() => {
     const savedUser = localStorage.getItem('user');
     return savedUser ? JSON.parse(savedUser) : null;
   });
 
-  const login = (userData: any) => {
+  const login = (userData: User) => {
     setIsLoggedIn(true);
     setUser(userData);
     localStorage.setItem('isLoggedIn', 'true');
@@ -49,3 +57,5 @@ export function useAuth() {
   }
   return context;
 }
+
+export type { User, UserRole };

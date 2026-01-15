@@ -1,0 +1,265 @@
+.job-list-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.job-list-header {
+  margin-bottom: 32px;
+}
+
+.page-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #1a202c;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Filters */
+.filters-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  min-width: 192px;
+  padding: 10px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.filter-select:focus {
+  border-color: #00BFA6;
+}
+
+.filter-spacer {
+  flex: 1;
+}
+
+.job-count-badge {
+  padding: 10px 16px;
+  background: #f3f4f6;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Jobs Grid */
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .jobs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.job-card {
+  background: white;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.job-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.job-card.selected {
+  border-color: #00BFA6;
+  box-shadow: 0 8px 24px rgba(0, 191, 166, 0.2);
+}
+
+/* Card Header */
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.job-card-title-section {
+  flex: 1;
+}
+
+.job-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.job-card-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #1a202c;
+}
+
+.urgent-badge {
+  padding: 4px 12px;
+  background: #fee2e2;
+  color: #991b1b;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.job-card-customer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.job-card-pay-section {
+  text-align: right;
+}
+
+.job-pay {
+  font-size: 32px;
+  font-weight: 700;
+  color: #00BFA6;
+  margin: 0 0 4px 0;
+}
+
+.job-duration {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Description */
+.job-description {
+  color: #4b5563;
+  margin: 0 0 16px 0;
+  line-height: 1.6;
+  font-size: 15px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Details Grid */
+.job-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.job-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.icon-small {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Actions */
+.job-card-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-view-detail {
+  flex: 1;
+  padding: 12px 20px;
+  background: #00BFA6;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-view-detail:hover {
+  background: #00a88f;
+  transform: translateY(-1px);
+}
+
+.btn-reject {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: white;
+  color: #6b7280;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-reject:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: #fef2f2;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .page-title {
+    font-size: 28px;
+  }
+
+  .filters-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+
+  .filter-spacer {
+    display: none;
+  }
+
+  .job-card-header {
+    flex-direction: column;
+  }
+
+  .job-card-pay-section {
+    text-align: left;
+  }
+
+  .job-details-grid {
+    grid-template-columns: 1fr;
+  }
+}

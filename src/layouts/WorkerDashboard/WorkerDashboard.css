@@ -1,0 +1,663 @@
+.worker-dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+/* Header */
+.dashboard-header {
+  margin-bottom: 32px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.dashboard-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 8px;
+}
+
+.dashboard-subtitle {
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.status-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  padding: 16px 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.status-label {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.status-value {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.status-value.available {
+  color: #10b981;
+}
+
+.status-value.offline {
+  color: #6b7280;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cbd5e0;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #00BFA6;
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon .icon {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+.bg-gradient-from-green-500 {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.bg-gradient-from-blue-500 {
+  background: linear-gradient(135deg, #3b82f6 0%, #4f46e5 100%);
+}
+
+.bg-gradient-from-yellow-500 {
+  background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+}
+
+.bg-gradient-from-purple-500 {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+}
+
+.stat-change {
+  background: #d1fae5;
+  color: #065f46;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Jobs Card */
+.jobs-card {
+  background: white;
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.jobs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 4px;
+}
+
+.section-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.btn-outline {
+  padding: 10px 20px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: transparent;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.btn-outline.full-width {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Job List */
+.jobs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.job-item {
+  padding: 24px;
+  background: linear-gradient(135deg, #f9fafb 0%, white 100%);
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.job-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.job-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 4px;
+}
+
+.job-customer {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.job-right {
+  text-align: right;
+}
+
+.job-pay {
+  font-size: 24px;
+  font-weight: 700;
+  color: #00BFA6;
+  margin-bottom: 4px;
+}
+
+.job-status {
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+
+.job-info {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.info-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.job-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 12px 20px;
+  background: #00BFA6;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #00a88f;
+}
+
+/* Action Card */
+.action-card {
+  background: linear-gradient(135deg, #00BFA6 0%, #00D4B8 100%);
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0, 191, 166, 0.3);
+}
+
+.action-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.action-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.action-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.btn-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: white;
+  color: #00BFA6;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-action:hover {
+  background: #f9fafb;
+}
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Profile Card */
+.profile-card {
+  background: white;
+  padding: 24px;
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 16px;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 8px;
+}
+
+.profile-badge {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1e40af;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.profile-stats {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-stat {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.profile-stat .stat-label {
+  color: #6b7280;
+}
+
+.profile-stat .stat-value {
+  font-weight: 600;
+  color: #1a202c;
+}
+
+/* Achievements */
+.achievements-card {
+  background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+  padding: 24px;
+  border-radius: 24px;
+}
+
+.achievements-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.achievement-icon {
+  width: 24px;
+  height: 24px;
+  color: #f59e0b;
+}
+
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 12px;
+}
+
+.achievement-emoji {
+  font-size: 32px;
+}
+
+.achievement-title {
+  font-weight: 600;
+  color: #1a202c;
+  font-size: 14px;
+}
+
+.achievement-subtitle {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Earnings */
+.earnings-card {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  padding: 24px;
+  border-radius: 24px;
+}
+
+.earnings-value {
+  font-size: 36px;
+  font-weight: 700;
+  color: #047857;
+  margin: 12px 0;
+}
+
+.earnings-change {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #065f46;
+  font-weight: 500;
+}
+
+.change-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-earnings {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  background: #059669;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-earnings:hover {
+  background: #047857;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-title {
+    font-size: 28px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .action-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Thêm vào cuối WorkerDashboard.css */
+
+/* ✅ Tabs Container */
+.tabs-container {
+  margin-bottom: 32px;
+}
+
+.tabs-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 400px;
+  background: #f3f4f6;
+  border-radius: 16px;
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 32px;
+}
+
+.tab-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-trigger:hover {
+  color: #374151;
+}
+
+.tab-trigger.active {
+  background: white;
+  color: #00BFA6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tab-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.tab-label {
+  display: none;
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Tabs */
+@media (min-width: 640px) {
+  .tab-label {
+    display: inline;
+  }
+}
+
+@media (max-width: 640px) {
+  .tabs-list {
+    max-width: 100%;
+  }
+  
+  .tab-trigger {
+    padding: 10px 16px;
+  }
+}

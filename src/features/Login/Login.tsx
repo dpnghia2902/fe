@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext"; // Thêm import
-import Container from "../../components/Container";
+import { useAuth } from "../../contexts/AuthContext";
+import type { User, UserRole } from "../../contexts/AuthContext"; // ✅ Import cả User và UserRole
 import "./Login.css";
 
 interface FormErrors {
@@ -19,8 +19,8 @@ interface FormData {
 }
 
 export default function AuthForm() {
-  const navigate = useNavigate(); // Thêm navigate
-  const { login } = useAuth(); // Thêm Auth Context
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -96,26 +96,35 @@ export default function AuthForm() {
 
     setIsSubmitting(true);
     
-    // Mô phỏng API call
     setTimeout(() => {
       if (isLogin) {
-        // Đăng nhập
-        login({
+        // ✅ Type assertion với User type
+        const userData: User = {
           email: formData.email,
-          name: formData.email.split('@')[0], // Lấy tên từ email
-        });
+          name: formData.email.split('@')[0],
+          role: 'customer' // Sau này lấy từ API: apiResponse.role
+        };
         
+        login(userData);
         alert(`Đăng nhập thành công với email: ${formData.email}`);
-        navigate('/'); // Redirect về trang chủ
+        
+        // ✅ Giờ userData.role có đúng type UserRole
+        if (userData.role === 'worker') {
+          navigate('/worker-dashboard');
+        } else {
+          navigate('/');
+        }
       } else {
-        // Đăng ký - Sau khi đăng ký xong, tự động login
-        login({
+        // ✅ Type assertion với User type
+        const userData: User = {
           email: formData.email,
           name: formData.name || formData.email.split('@')[0],
-        });
+          role: 'customer'
+        };
         
+        login(userData);
         alert(`Đăng ký thành công! Chào mừng ${formData.name}`);
-        navigate('/'); // Redirect về trang chủ
+        navigate('/');
       }
       
       setIsSubmitting(false);
@@ -135,7 +144,8 @@ export default function AuthForm() {
 
   return (
     <div className="auth-wrapper">
-      <Container maxWidth="450px" padding="0">
+      <div className="auth-container">
+        {/* ✅ Container Login bên trái */}
         <div className="auth-form-container">
           <div className="auth-header">
             <h1>{isLogin ? "Đăng Nhập" : "Đăng Ký"}</h1>
@@ -243,7 +253,51 @@ export default function AuthForm() {
             </p>
           </div>
         </div>
-      </Container>
+
+        {/* ✅ Container Đối tác bên phải - Chỉ hiện khi Login */}
+        {isLogin && (
+          <div className="partner-container">
+            <div className="partner-card-large">
+              <div className="partner-icon-large">💼</div>
+              <h2 className="partner-title-large">Trở thành đối tác HandyGo</h2>
+              <p className="partner-desc-large">
+                Gia nhập mạng lưới người làm việc chuyên nghiệp và mở ra cơ hội kiếm thu nhập ổn định
+              </p>
+              
+              <div className="partner-benefits">
+                <div className="benefit-item">
+                  <span className="benefit-icon">✅</span>
+                  <span>Thu nhập hấp dẫn</span>
+                </div>
+                <div className="benefit-item">
+                  <span className="benefit-icon">📅</span>
+                  <span>Lịch làm việc linh hoạt</span>
+                </div>
+                <div className="benefit-item">
+                  <span className="benefit-icon">🎯</span>
+                  <span>Hỗ trợ tìm khách hàng</span>
+                </div>
+                <div className="benefit-item">
+                  <span className="benefit-icon">🛡️</span>
+                  <span>Bảo hiểm & quyền lợi</span>
+                </div>
+              </div>
+
+              <button 
+                type="button"
+                onClick={() => navigate("/partner-register")}
+                className="btn-partner-large"
+              >
+                Đăng ký ngay →
+              </button>
+
+              <p className="partner-note">
+                Đã có hơn <strong>10,000+</strong> đối tác tin tưởng
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

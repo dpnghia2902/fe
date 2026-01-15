@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import Container from "../components/Container";
 import HeroSection from "../layouts/HeroSection/HeroSection";
 import AboutSection from "../layouts/AboutSection/AboutSection";
 import CustomerDashboard from "../layouts/CustomerDashboard/CustomerDashboard";
+import WorkerDashboard from "../layouts/WorkerDashboard/WorkerDashboard";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth(); // ✅ Thêm user
 
   const handleNavigate = (path: string) => {
     navigate(`/${path}`);
@@ -16,13 +16,16 @@ export default function Home() {
   return (
     <>
       {!isLoggedIn ? (
-        // Chưa đăng nhập - Hiển thị Hero và About
+        // ✅ Chưa đăng nhập - Hiển thị Hero và About
         <>
-            <HeroSection onNavigate={handleNavigate} />
+          <HeroSection onNavigate={handleNavigate} />
           <AboutSection />
         </>
+      ) : user?.role === 'worker' ? (
+        // ✅ Đã đăng nhập VÀ là Worker - Hiển thị Worker Dashboard
+        <WorkerDashboard />
       ) : (
-        // Đã đăng nhập - Hiển thị Dashboard
+        // ✅ Đã đăng nhập VÀ là Customer - Hiển thị Customer Dashboard
         <CustomerDashboard onNavigate={handleNavigate} />
       )}
     </>

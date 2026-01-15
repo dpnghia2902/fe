@@ -1,0 +1,352 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  border-radius: 24px;
+  padding: 32px;
+  max-width: 768px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+.modal-content.small {
+  max-width: 480px;
+}
+
+.modal-close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #6b7280;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background: #f3f4f6;
+}
+
+.modal-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+  color: #1a202c;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.info-section,
+.details-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-section h3,
+.details-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.info-grid {
+  background: #f9fafb;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-item {
+  display: flex;
+  gap: 12px;
+}
+
+.info-icon {
+  width: 20px;
+  height: 20px;
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.info-label {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 4px 0;
+}
+
+.info-value {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0;
+  color: #1f2937;
+}
+
+.info-sub {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 4px 0 0 0;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.detail-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+.detail-card.payment {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+}
+
+.detail-icon {
+  width: 20px;
+  height: 20px;
+  color: #00BFA6;
+}
+
+.detail-label {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 4px 0;
+}
+
+.detail-value {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.detail-value.pay {
+  font-size: 20px;
+  color: #059669;
+}
+
+.description-box {
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+.description-label {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+}
+
+.description-text {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  color: #374151;
+}
+
+.contact-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-contact:hover {
+  border-color: #00BFA6;
+  color: #00BFA6;
+}
+
+.contact-options {
+  padding: 16px;
+  background: #f0fdf4;
+  border: 2px solid #00BFA6;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-label {
+  font-size: 14px;
+  color: #374151;
+  margin: 0 0 8px 0;
+}
+
+.contact-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.contact-option:hover {
+  border-color: #00BFA6;
+}
+
+.contact-option.primary {
+  background: #00BFA6;
+  border-color: #00BFA6;
+  color: white;
+}
+
+.contact-option.primary:hover {
+  background: #00a88f;
+}
+
+.btn-accept {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #00BFA6 0%, #00D4B8 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-accept:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 191, 166, 0.4);
+}
+
+.confirm-text {
+  font-size: 15px;
+  color: #6b7280;
+  margin: 0 0 16px 0;
+}
+
+.confirm-details {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.confirm-row span:first-child {
+  color: #6b7280;
+}
+
+.confirm-row span:last-child {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.confirm-row .pay {
+  color: #059669;
+  font-weight: 600;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-cancel,
+.btn-confirm {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel {
+  background: white;
+  border: 2px solid #e5e7eb;
+  color: #374151;
+}
+
+.btn-cancel:hover {
+  background: #f9fafb;
+}
+
+.btn-confirm {
+  background: #00BFA6;
+  border: none;
+  color: white;
+}
+
+.btn-confirm:hover {
+  background: #00a88f;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
