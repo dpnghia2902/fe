@@ -1,7 +1,11 @@
-// CreateTask.tsx - ✅ NÚT ĐĂNG BÀI HOẠT ĐỘNG 100%
+// CreateTask.tsx - ✅ SYNC TRACKING + SỐ NGƯỜI CẦN
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, Package, Wrench, GraduationCap, Car, ShoppingBag, MapPin, Calendar as CalendarIcon, Clock, DollarSign, Upload, ChevronRight, Check, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { 
+  Home, Package, Wrench, GraduationCap, Car, ShoppingBag, 
+  MapPin, Calendar as CalendarIcon, Clock, DollarSign, Upload, 
+  ChevronRight, Check, AlertCircle, CheckCircle2, Users 
+} from 'lucide-react';
 import "./CreateTask.css";
 
 const formatDate = (date: Date) => {
@@ -28,6 +32,7 @@ interface FormData {
   budget: string;
   date: string;
   time: string;
+  peopleNeeded: string; // ✅ THÊM SỐ NGƯỜI
 }
 
 export default function CreateTask() {
@@ -41,6 +46,7 @@ export default function CreateTask() {
     budget: '',
     date: '',
     time: '',
+    peopleNeeded: '2', // ✅ DEFAULT 2 NGƯỜI
   });
   const [files, setFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -50,10 +56,10 @@ export default function CreateTask() {
 
   const steps = [
     { number: 1, title: 'Chi tiết', description: 'Thêm thông tin yêu cầu' },
-    { number: 2, title: 'Lịch trình', description: 'Chọn ngày và giờ' },
+    { number: 2, title: 'Lịch trình', description: 'Chọn ngày, giờ và số người' },
   ];
 
-  // ✅ FIX 1: AUTO REDIRECT COUNTDOWN
+  // ✅ AUTO REDIRECT COUNTDOWN
   useEffect(() => {
     if (showSuccessPopup) {
       const timer = setInterval(() => {
@@ -65,12 +71,10 @@ export default function CreateTask() {
           return prev - 1;
         });
       }, 1000);
-
       return () => clearInterval(timer);
     }
   }, [showSuccessPopup, redirectCountdown, navigate]);
 
-  // ✅ FIX 2: VALIDATE KHÔNG SET ERRORS LẠI (chỉ return errors)
   const validateStep1 = (): Record<string, string> => {
     const newErrors: Record<string, string> = {};
     
@@ -87,19 +91,16 @@ export default function CreateTask() {
     
     if (!formData.date) newErrors.date = 'Vui lòng chọn ngày';
     if (!formData.time) newErrors.time = 'Vui lòng chọn khung giờ';
+    if (!formData.peopleNeeded || parseInt(formData.peopleNeeded) <= 0) newErrors.peopleNeeded = 'Vui lòng chọn số người cần';
     
     return newErrors;
   };
 
-  // ✅ FIX 3: COMBINE VALIDATION + CLEAR OLD ERRORS
   const validateForm = (): boolean => {
     const step1Errors = validateStep1();
     const step2Errors = validateStep2();
-    
-    // ✅ Merge tất cả errors
     const allErrors = { ...step1Errors, ...step2Errors };
     setErrors(allErrors);
-    
     return Object.keys(allErrors).length === 0;
   };
 
@@ -108,7 +109,6 @@ export default function CreateTask() {
     setFormData(prev => ({ ...prev, [name]: value as keyof FormData }));
     setTouched(prev => ({ ...prev, [name]: true }));
     
-    // Clear error khi user type
     if (errors[name as keyof typeof errors]) {
       setErrors(prev => {
         const newErrors = { ...prev };
@@ -121,7 +121,7 @@ export default function CreateTask() {
   const handleBlur = (field: string) => {
     setTouched(prev => ({ ...prev, [field]: true }));
     
-    const fieldErrors = field === 'date' || field === 'time' 
+    const fieldErrors = field === 'date' || field === 'time' || field === 'peopleNeeded'
       ? validateStep2()
       : validateStep1();
     
@@ -136,11 +136,9 @@ export default function CreateTask() {
     }
   };
 
-  // ✅ FIX 4: NEXT STEP KHÔNG DISABLE NÚT
   const handleNextStep = () => {
     const step1Errors = validateStep1();
     setErrors(step1Errors);
-    
     if (Object.keys(step1Errors).length === 0) {
       setCurrentStep(2);
     }
@@ -150,7 +148,6 @@ export default function CreateTask() {
     if (validateForm()) {
       console.log('✅ Form Data:', formData);
       console.log('✅ Files:', files);
-      
       setShowSuccessPopup(true);
     }
   };
@@ -161,7 +158,6 @@ export default function CreateTask() {
       : '';
   };
 
-  // ✅ SUCCESS POPUP
   if (showSuccessPopup) {
     return (
       <div className="success-popup-overlay">
@@ -171,7 +167,8 @@ export default function CreateTask() {
           </div>
           <h2 className="success-title">Đăng bài thành công!</h2>
           <p className="success-message">
-            Yêu cầu hỗ trợ của bạn đã được đăng. Chúng tôi sẽ thông báo khi có người làm việc phản hồi.
+            Yêu cầu cần {formData.peopleNeeded} người đã được đăng. 
+            Chúng tôi sẽ thông báo khi có người làm việc phản hồi.
           </p>
           <div className="success-countdown">
             Tự động chuyển về trang chủ trong <span>{redirectCountdown}s</span>
@@ -229,7 +226,7 @@ export default function CreateTask() {
                 value={formData.title}
                 onChange={handleInputChange}
                 onBlur={() => handleBlur('title')}
-                placeholder="Ví dụ: Cần người dọn dẹp nhà cửa"
+                placeholder="Ví dụ: Cần 5 người hỗ trợ chuyển phòng"
                 className={`form-input ${getErrorMessage('title') ? 'error' : ''}`}
               />
               {getErrorMessage('title') && (
@@ -338,12 +335,11 @@ export default function CreateTask() {
             </div>
           </div>
 
-          {/* ✅ NÚT TIẾP TỤC KHÔNG DISABLE */}
           <div className="card-footer">
             <button
               onClick={handleNextStep}
               className="btn-primary"
-              disabled={false} // ✅ Luôn enable
+              disabled={false}
             >
               Tiếp tục
               <ChevronRight className="btn-icon" />
@@ -352,12 +348,12 @@ export default function CreateTask() {
         </div>
       )}
 
-      {/* Step 2: Schedule */}
+      {/* ✅ STEP 2: SYNC TRACKING - THÊM SỐ NGƯỜI */}
       {currentStep === 2 && (
         <div className="task-card">
           <div className="card-header">
-            <h2 className="card-title">Thời gian mong muốn</h2>
-            <p className="card-subtitle">Bạn cần hỗ trợ khi nào?</p>
+            <h2 className="card-title">Thời gian & Số người cần</h2>
+            <p className="card-subtitle">Hoàn tất thông tin để đăng bài</p>
           </div>
 
           <div className="schedule-grid">
@@ -380,58 +376,85 @@ export default function CreateTask() {
               )}
             </div>
 
-            {/* Time and Summary */}
+            {/* ✅ SỐ NGƯỜI CẦN - SYNC TRACKING */}
             <div className="schedule-section">
-              <div className="form-group">
-                <label className="form-label">Chọn giờ <span className="required">*</span></label>
+              <label className="form-label">Số người cần <span className="required">*</span></label>
+              <div className="input-with-icon">
+                <Users className="input-icon" size={20} />
                 <select
-                  name="time"
-                  value={formData.time}
+                  name="peopleNeeded"
+                  value={formData.peopleNeeded}
                   onChange={handleInputChange}
-                  onBlur={() => handleBlur('time')}
-                  className={`form-select ${getErrorMessage('time') ? 'error' : ''}`}
+                  onBlur={() => handleBlur('peopleNeeded')}
+                  className={`form-select ${getErrorMessage('peopleNeeded') ? 'error' : ''}`}
                 >
-                  <option value="">Chọn khung giờ</option>
-                  <option value="09:00">9:00 Sáng</option>
-                  <option value="10:00">10:00 Sáng</option>
-                  <option value="11:00">11:00 Sáng</option>
-                  <option value="14:00">2:00 Chiều</option>
-                  <option value="15:00">3:00 Chiều</option>
-                  <option value="16:00">4:00 Chiều</option>
+                  <option value="">Chọn số người</option>
+                  <option value="1">1 người</option>
+                  <option value="2">2 người</option>
+                  <option value="3">3 người</option>
+                  <option value="4">4 người</option>
+                  <option value="5">5 người</option>
+                  <option value="6">6+ người</option>
                 </select>
-                {getErrorMessage('time') && (
-                  <div className="error-message">
-                    <AlertCircle className="error-icon" size={16} />
-                    <span>{getErrorMessage('time')}</span>
-                  </div>
-                )}
               </div>
-
-              {/* Summary Card */}
-              <div className="summary-card">
-                <h3 className="summary-title">Tóm tắt yêu cầu</h3>
-                <div className="summary-content">
-                  <div className="summary-item">
-                    <span className="summary-label">Loại:</span>
-                    <span className="summary-badge">{selectedService}</span>
-                  </div>
-                  <div className="summary-item">
-                    <span className="summary-label">Ngày:</span>
-                    <span>{formData.date || 'Chưa chọn'}</span>
-                  </div>
-                  <div className="summary-item">
-                    <span className="summary-label">Giờ:</span>
-                    <span>{formData.time || 'Chưa chọn'}</span>
-                  </div>
-                  <div className="summary-item">
-                    <span className="summary-label">Ngân sách:</span>
-                    <span>{formData.budget ? `${formData.budget}₫` : 'Chưa nhập'}</span>
-                  </div>
+              {getErrorMessage('peopleNeeded') && (
+                <div className="error-message">
+                  <AlertCircle className="error-icon" size={16} />
+                  <span>{getErrorMessage('peopleNeeded')}</span>
                 </div>
-              </div>
+              )}
+            </div>
 
-              <div className="tip-box">
-                <p>💡 Mẹo: Đăng bài sớm để được nhiều người làm việc phản hồi hơn!</p>
+            {/* Time */}
+            <div className="schedule-section">
+              <label className="form-label">Chọn giờ <span className="required">*</span></label>
+              <select
+                name="time"
+                value={formData.time}
+                onChange={handleInputChange}
+                onBlur={() => handleBlur('time')}
+                className={`form-input ${getErrorMessage('time') ? 'error' : ''}`}
+              >
+                <option value="">Chọn khung giờ</option>
+                <option value="09:00">9:00 Sáng</option>
+                <option value="10:00">10:00 Sáng</option>
+                <option value="11:00">11:00 Sáng</option>
+                <option value="14:00">2:00 Chiều</option>
+                <option value="15:00">3:00 Chiều</option>
+                <option value="16:00">4:00 Chiều</option>
+              </select>
+              {getErrorMessage('time') && (
+                <div className="error-message">
+                  <AlertCircle className="error-icon" size={16} />
+                  <span>{getErrorMessage('time')}</span>
+                </div>
+              )}
+            </div>
+
+            {/* ✅ SUMMARY CARD - SYNC TRACKING */}
+            <div className="summary-card">
+              <h3 className="summary-title">Tóm tắt yêu cầu</h3>
+              <div className="summary-content">
+                <div className="summary-item">
+                  <span className="summary-label">Tiêu đề:</span>
+                  <span className="summary-value">{formData.title || 'Chưa nhập'}</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">Địa chỉ:</span>
+                  <span className="summary-value">{formData.address || 'Chưa nhập'}</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">Số người:</span>
+                  <span className="summary-badge">{formData.peopleNeeded} người</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">Thời gian:</span>
+                  <span>{formData.date && formData.time ? `${formData.date} ${formData.time}` : 'Chưa chọn'}</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">Ngân sách:</span>
+                  <span className="summary-value">{formData.budget ? `${formData.budget}₫` : 'Chưa nhập'}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -446,7 +469,7 @@ export default function CreateTask() {
             <button
               onClick={handleSubmit}
               className="btn-primary"
-              disabled={false} 
+              disabled={false}
             >
               Đăng bài
               <Check className="btn-icon" />
