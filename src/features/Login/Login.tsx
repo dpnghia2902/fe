@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import type { User, UserRole } from "../../contexts/AuthContext"; // ✅ Import cả User và UserRole
+import type { User, UserRole } from "../../contexts/AuthContext";
 import "./Login.css";
 
 interface FormErrors {
@@ -98,24 +98,16 @@ export default function AuthForm() {
     
     setTimeout(() => {
       if (isLogin) {
-        // ✅ Type assertion với User type
         const userData: User = {
           email: formData.email,
           name: formData.email.split('@')[0],
-          role: 'customer' // Sau này lấy từ API: apiResponse.role
+          role: 'customer'
         };
         
         login(userData);
         alert(`Đăng nhập thành công với email: ${formData.email}`);
-        
-        // ✅ Giờ userData.role có đúng type UserRole
-        if (userData.role === 'worker') {
-          navigate('/worker-dashboard');
-        } else {
-          navigate('/');
-        }
+        navigate('/');
       } else {
-        // ✅ Type assertion với User type
         const userData: User = {
           email: formData.email,
           name: formData.name || formData.email.split('@')[0],
@@ -131,6 +123,12 @@ export default function AuthForm() {
     }, 1500);
   };
 
+  // ✅ SỬA: "Đăng ký ngay" → navigate('/register')
+  const handleRegisterClick = () => {
+    navigate('/register');
+  };
+
+  // Toggle chỉ cho Login ↔ Register nhanh (nếu cần)
   const toggleMode = () => {
     setIsLogin(!isLogin);
     setFormData({
@@ -145,14 +143,14 @@ export default function AuthForm() {
   return (
     <div className="auth-wrapper">
       <div className="auth-container">
-        {/* ✅ Container Login bên trái */}
         <div className="auth-form-container">
           <div className="auth-header">
             <h1>{isLogin ? "Đăng Nhập" : "Đăng Ký"}</h1>
             <p>
               {isLogin
                 ? "Chào mừng bạn quay trở lại!"
-                : "Tạo tài khoản mới của bạn"}
+                : "Tạo tài khoản mới của bạn"
+              }
             </p>
           </div>
 
@@ -227,7 +225,9 @@ export default function AuthForm() {
 
             {isLogin && (
               <div className="forgot-password">
-                <a href="forget-password">Quên mật khẩu?</a>
+                <a href="#forgot-password" onClick={(e) => e.preventDefault()}>
+                  Quên mật khẩu?
+                </a>
               </div>
             )}
 
@@ -246,57 +246,19 @@ export default function AuthForm() {
 
           <div className="auth-toggle">
             <p>
-              {isLogin ? "Chưa có tài khoản?" : "Đã có tài khoản?"}{" "}
-              <button onClick={toggleMode} className="toggle-button">
+              {isLogin 
+                ? "Chưa có tài khoản?" 
+                : "Đã có tài khoản?"
+              }{" "}
+              <button 
+                onClick={isLogin ? handleRegisterClick : toggleMode} 
+                className="toggle-button"
+              >
                 {isLogin ? "Đăng ký ngay" : "Đăng nhập"}
               </button>
             </p>
           </div>
         </div>
-
-        {/* ✅ Container Đối tác bên phải - Chỉ hiện khi Login */}
-        {isLogin && (
-          <div className="partner-container">
-            <div className="partner-card-large">
-              <div className="partner-icon-large">💼</div>
-              <h2 className="partner-title-large">Trở thành đối tác HandyGo</h2>
-              <p className="partner-desc-large">
-                Gia nhập mạng lưới người làm việc chuyên nghiệp và mở ra cơ hội kiếm thu nhập ổn định
-              </p>
-              
-              <div className="partner-benefits">
-                <div className="benefit-item">
-                  <span className="benefit-icon">✅</span>
-                  <span>Thu nhập hấp dẫn</span>
-                </div>
-                <div className="benefit-item">
-                  <span className="benefit-icon">📅</span>
-                  <span>Lịch làm việc linh hoạt</span>
-                </div>
-                <div className="benefit-item">
-                  <span className="benefit-icon">🎯</span>
-                  <span>Hỗ trợ tìm khách hàng</span>
-                </div>
-                <div className="benefit-item">
-                  <span className="benefit-icon">🛡️</span>
-                  <span>Bảo hiểm & quyền lợi</span>
-                </div>
-              </div>
-
-              <button 
-                type="button"
-                onClick={() => navigate("/partner-register")}
-                className="btn-partner-large"
-              >
-                Đăng ký ngay →
-              </button>
-
-              <p className="partner-note">
-                Đã có hơn <strong>10,000+</strong> đối tác tin tưởng
-              </p>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   User, Wallet, History, HeadphonesIcon, Edit2, Star, MapPin, 
-  Phone, Mail, CreditCard, DollarSign, Calendar, LogOut, FileText, Check 
+  Phone, Mail, CreditCard, DollarSign, Calendar, LogOut, FileText, Check,
+  ShieldCheck 
 } from 'lucide-react';
 import './CustomerProfile.css';
 
@@ -37,6 +38,7 @@ export default function CustomerProfile() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('profile');
   const [editMode, setEditMode] = useState(false);
+  const [isVerified, setIsVerified] = useState(true); // ✅ State xác minh
 
   return (
     <div className="profile-container">
@@ -46,7 +48,7 @@ export default function CustomerProfile() {
         <p className="profile-subtitle">Quản lý tài khoản và xem hoạt động của bạn</p>
       </div>
 
-      {/* Tabs */}
+      {/* Tabs - ✅ BỎ tab Wallet */}
       <div className="profile-tabs">
         <div className="tabs-list">
           <button 
@@ -71,11 +73,11 @@ export default function CustomerProfile() {
             Bài đăng
           </button>
           <button 
-            className={`tab-item ${activeTab === 'wallet' ? 'active' : ''}`}
-            onClick={() => setActiveTab('wallet')}
+            className={`tab-item ${activeTab === 'payment' ? 'active' : ''}`}
+            onClick={() => setActiveTab('payment')}
           >
-            <Wallet className="tab-icon" />
-            Ví
+            <CreditCard className="tab-icon" />
+            Thanh toán
           </button>
           <button 
             className={`tab-item ${activeTab === 'support' ? 'active' : ''}`}
@@ -86,7 +88,7 @@ export default function CustomerProfile() {
           </button>
         </div>
 
-        {/* Profile Tab Content */}
+        {/* Profile Tab Content - ✅ THÊM trạng thái xác minh */}
         {activeTab === 'profile' && (
           <div className="tab-content">
             <div className="profile-grid">
@@ -97,6 +99,22 @@ export default function CustomerProfile() {
                     <span className="avatar-initials">NVA</span>
                   </div>
                   <h2 className="profile-name">Nguyễn Văn A</h2>
+                  
+                  {/* ✅ TRẠNG THÁI XÁC MINH */}
+                  <div className="profile-verified">
+                    {isVerified ? (
+                      <>
+                        <ShieldCheck className="verified-icon" />
+                        <span>Tài khoản đã được xác minh</span>
+                      </>
+                    ) : (
+                      <>
+                        <div className="unverified-badge" />
+                        <span>Tài khoản chưa được xác minh</span>
+                      </>
+                    )}
+                  </div>
+                  
                   <p className="profile-member-since">Thành viên từ 10/2025</p>
                   <button className="upload-photo-btn">
                     <Edit2 className="btn-icon" />
@@ -212,19 +230,19 @@ export default function CustomerProfile() {
                   </div>
                 )}
               </div>
-            </div>
 
-            {/* Logout Card */}
-            <div className="logout-card">
-              <div className="logout-content">
-                <div>
-                  <h3 className="logout-title">Đăng xuất</h3>
-                  <p className="logout-text">Thoát khỏi tài khoản của bạn</p>
+              {/* Logout Card */}
+              <div className="logout-card">
+                <div className="logout-content">
+                  <div>
+                    <h3 className="logout-title">Đăng xuất</h3>
+                    <p className="logout-text">Thoát khỏi tài khoản của bạn</p>
+                  </div>
+                  <button className="logout-btn" onClick={() => navigate('/login')}>
+                    <LogOut className="btn-icon" />
+                    Đăng xuất
+                  </button>
                 </div>
-                <button className="logout-btn" onClick={() => navigate('/login')}>
-                  <LogOut className="btn-icon" />
-                  Đăng xuất
-                </button>
               </div>
             </div>
           </div>
@@ -317,24 +335,10 @@ export default function CustomerProfile() {
           </div>
         )}
 
-        {/* Wallet Tab Content */}
-        {activeTab === 'wallet' && (
+        {/* ✅ NEW: Payment Tab Content (Thay thế Wallet) */}
+        {activeTab === 'payment' && (
           <div className="tab-content">
-            <div className="wallet-grid">
-              {/* Balance Card */}
-              <div className="balance-card">
-                <div className="balance-header">
-                  <Wallet className="wallet-icon" />
-                  <span>Ví HandyGo</span>
-                </div>
-                <p className="balance-label">Số dư khả dụng</p>
-                <p className="balance-amount">327.500đ</p>
-                <div className="balance-actions">
-                  <button className="deposit-btn">Nạp tiền</button>
-                  <button className="withdraw-btn">Rút tiền</button>
-                </div>
-              </div>
-
+            <div className="payment-grid">
               {/* Payment Methods */}
               <div className="payment-card">
                 <h3 className="payment-title">Phương thức thanh toán</h3>
@@ -354,28 +358,28 @@ export default function CustomerProfile() {
                   <button className="add-method-btn">Thêm phương thức thanh toán</button>
                 </div>
               </div>
-            </div>
 
-            {/* Transactions */}
-            <div className="transactions-card">
-              <h2 className="transactions-title">Giao dịch gần đây</h2>
-              <div className="transactions-list">
-                {transactions.map((transaction) => (
-                  <div key={transaction.id} className="transaction-item">
-                    <div className="transaction-info">
-                      <div className={`transaction-icon ${transaction.amount > 0 ? 'positive' : 'negative'}`}>
-                        <DollarSign className="dollar-icon" />
+              {/* Transactions */}
+              <div className="transactions-card">
+                <h2 className="transactions-title">Giao dịch gần đây</h2>
+                <div className="transactions-list">
+                  {transactions.map((transaction) => (
+                    <div key={transaction.id} className="transaction-item">
+                      <div className="transaction-info">
+                        <div className={`transaction-icon ${transaction.amount > 0 ? 'positive' : 'negative'}`}>
+                          <DollarSign className="dollar-icon" />
+                        </div>
+                        <div>
+                          <p className="transaction-description">{transaction.description}</p>
+                          <p className="transaction-date">{transaction.date}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="transaction-description">{transaction.description}</p>
-                        <p className="transaction-date">{transaction.date}</p>
-                      </div>
+                      <p className={`transaction-amount ${transaction.amount > 0 ? 'positive' : ''}`}>
+                        {transaction.amount > 0 ? '+' : ''}{Math.abs(transaction.amount * 1000).toFixed(0)}đ
+                      </p>
                     </div>
-                    <p className={`transaction-amount ${transaction.amount > 0 ? 'positive' : ''}`}>
-                      {transaction.amount > 0 ? '+' : ''}{Math.abs(transaction.amount * 1000).toFixed(0)}đ
-                    </p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>

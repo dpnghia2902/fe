@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageCircle, Phone, MapPin, Clock, Check, Navigation, AlertTriangle, Star } from 'lucide-react';
+import { MessageCircle, Phone, MapPin, Clock, Check, Navigation, AlertTriangle, Star, FileText } from 'lucide-react';
 import './TrackTask.css';
+
+// ✅ THÊM STATE KIỂM TRA CÓ CÔNG VIỆC KHÔNG
+const hasActiveTask = true; // Đổi thành true để test nội dung tracking
 
 const statusSteps = [
   { id: 1, label: 'Đặt chỗ đã xác nhận', time: '9:30 Sáng', completed: true },
@@ -15,6 +18,39 @@ export default function TrackTask() {
   const navigate = useNavigate();
   const currentProgress = 60;
   const [showReportDialog, setShowReportDialog] = useState(false);
+
+  // ✅ HIỂN THỊ EMPTY STATE NẾU CHƯA CÓ CÔNG VIỆC
+  if (!hasActiveTask) {
+    return (
+      <div className="track-task-container">
+        {/* Header */}
+        <div className="track-header">
+          <h1 className="track-title">Theo dõi công việc</h1>
+          <p className="track-subtitle">Giám sát dịch vụ của bạn theo thời gian thực</p>
+        </div>
+
+        {/* Empty State */}
+        <div className="empty-state">
+          <div className="empty-icon-wrapper">
+            <FileText className="empty-icon" />
+          </div>
+          <h2 className="empty-title">Chưa có công việc nào</h2>
+          <p className="empty-subtitle">
+            Hiện tại bạn chưa nhận công việc nào để theo dõi. 
+            Quay lại trang chính để tìm việc mới nhé!
+          </p>
+          <div className="empty-actions">
+            <button 
+              onClick={() => navigate('/')}
+              className="empty-action-btn primary"
+            >
+              Tìm việc mới
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="track-task-container">

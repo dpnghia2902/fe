@@ -50,15 +50,15 @@
   color: #64748b;
 }
 
-/* Progress Steps */
-.progress-steps {
+/* Partner Progress Steps - Tránh xung đột */
+.partner-register-box .progress-steps {
   display: flex;
   justify-content: space-between;
   margin-bottom: 40px;
   position: relative;
 }
 
-.progress-steps::before {
+.partner-register-box .progress-steps::before {
   content: "";
   position: absolute;
   top: 20px;
@@ -69,7 +69,7 @@
   z-index: 0;
 }
 
-.step {
+.partner-register-box .step {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,7 +79,7 @@
   flex: 1;
 }
 
-.step-number {
+.partner-register-box .step-number {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -92,20 +92,20 @@
   transition: all 0.3s ease;
 }
 
-.step.active .step-number {
+.partner-register-box .step.active .step-number {
   background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
   color: white;
   box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
 }
 
-.step-label {
+.partner-register-box .step-label {
   font-size: 12px;
   color: #64748b;
   font-weight: 600;
   text-align: center;
 }
 
-.step.active .step-label {
+.partner-register-box .step.active .step-label {
   color: #0c4a6e;
 }
 
@@ -304,11 +304,11 @@
     grid-template-columns: 1fr;
   }
 
-  .step-label {
+  .partner-register-box .step-label {
     display: none;
   }
 
-  .progress-steps::before {
+  .partner-register-box .progress-steps::before {
     left: 8%;
     right: 8%;
   }

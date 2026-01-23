@@ -5,7 +5,7 @@ import Login from "../features/Login/Login";
 import Register from "../features/Register/Register";
 import ForgetPassword from "../features/ForgetPassword/ForgetPassword";
 import CreateTask from "../layouts/CreateTask/CreateTask";
-import MatchingWorkers from "../layouts/MatchingWorker/MatchingWorkers";
+// import MatchingWorkers from "../layouts/MatchingWorker/MatchingWorkers";
 import TrackTask from "../layouts/TrackTask/TrackTask";
 import CustomerProfile from "../layouts/CustomerProfile/CustomerProfile";
 import RatingFeedback from "../layouts/Rating/RatingFeedback";
@@ -15,6 +15,7 @@ import JobList from "../layouts/WorkerDashboard/JobList";
 import CurrentJob from "../layouts/WorkerDashboard/CurrentJob";
 import WorkerEarnings from "../layouts/WorkerDashboard/WorkerEarnings";
 import WorkerProfile from "../layouts/WorkerDashboard/WorkerProfile";
+import Tracking from "../layouts/Tracking/Tracking";
 
 export const router = createBrowserRouter([
   {
@@ -30,13 +31,13 @@ export const router = createBrowserRouter([
         path: "create",
         element: <CreateTask />
       },
-      {
-        path: "matching",  
-        element: <MatchingWorkers />
-      },
+      // {
+      //   path: "matching",  
+      //   element: <MatchingWorkers />
+      // },
       {
         path: "tracking",
-        element: <div>Tracking Page (Coming Soon)</div>
+        element: <Tracking />
       },
       {
         path: "notifications",
