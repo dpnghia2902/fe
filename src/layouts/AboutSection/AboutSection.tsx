@@ -77,28 +77,6 @@ export default function AboutSection() {
           </div>
         </div>
 
-        {/* Stats Section */}
-        <div className="stats-section">
-          <div className="stat-item">
-            <div className="stat-number">10,000+</div>
-            <div className="stat-label">Người làm việc</div>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <div className="stat-number">50,000+</div>
-            <div className="stat-label">Công việc hoàn thành</div>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <div className="stat-number">4.8/5</div>
-            <div className="stat-label">Đánh giá trung bình</div>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <div className="stat-number">24/7</div>
-            <div className="stat-label">Hỗ trợ khách hàng</div>
-          </div>
-        </div>
 
         {/* CTA Section */}
         <div className="cta-section">

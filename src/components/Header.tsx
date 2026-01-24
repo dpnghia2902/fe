@@ -129,6 +129,7 @@ export default function Header() {
                 onClick={() => handleNavigation('/worker-dashboard')}
                 className="nav-item"
               >
+
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="nav-icon">
                   <path d="M2 6L8 2L14 6V13C14 13.5304 13.7893 14.0391 13.4142 14.4142C13.0391 14.7893 12.5304 15 12 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
@@ -239,6 +240,12 @@ export default function Header() {
                 className="nav-item"
               >
                 Công việc của tôi
+              </button>
+              <button
+                onClick={() => handleNavigation("/jobs")}
+                className="nav-item"
+              >
+                Quản lý bài đăng & ứng viên
               </button>
 
               <Notifications />

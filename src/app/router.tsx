@@ -16,6 +16,7 @@ import CurrentJob from "../layouts/WorkerDashboard/CurrentJob";
 import WorkerEarnings from "../layouts/WorkerDashboard/WorkerEarnings";
 import WorkerProfile from "../layouts/WorkerDashboard/WorkerProfile";
 import Tracking from "../layouts/Tracking/Tracking";
+import MyJobs from "../layouts/JobsManage/MyJobs";
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "worker/settings",
         element: <div>Worker Settings (Coming Soon)</div>
+      },
+      {
+        path: "jobs", 
+        element: <MyJobs />  
       },
     ],
   },

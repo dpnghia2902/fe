@@ -1,10 +1,24 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageCircle, Phone, MapPin, Clock, Check, Navigation, AlertTriangle, Star, FileText } from 'lucide-react';
+import { 
+  MessageCircle, Phone, MapPin, Clock, Check, Navigation, 
+  AlertTriangle, Star, FileText, Briefcase, ChevronRight, DollarSign 
+} from 'lucide-react';
 import './TrackTask.css';
 
-// ✅ THÊM STATE KIỂM TRA CÓ CÔNG VIỆC KHÔNG
-const hasActiveTask = true; // Đổi thành true để test nội dung tracking
+type TaskStatus = 'empty' | 'pending' | 'active';
+const taskStatus: TaskStatus = 'pending'; // Test: 'empty' | 'pending' | 'active'
+
+const pendingTask = {
+  id: 1,
+  title: 'Cần 3 người hỗ trợ dọn dẹp nhà cửa',
+  service: 'Dọn dẹp nhà cửa',
+  date: '24/01/2026',
+  time: '10:00 Sáng',
+  location: '123 Đường Chính, Căn hộ 4B, Q. Hai Bà Trưng',
+  budget: '300.000₫/người',
+  applicantsCount: 5,
+} as const;
 
 const statusSteps = [
   { id: 1, label: 'Đặt chỗ đã xác nhận', time: '9:30 Sáng', completed: true },
@@ -19,31 +33,26 @@ export default function TrackTask() {
   const currentProgress = 60;
   const [showReportDialog, setShowReportDialog] = useState(false);
 
-  // ✅ HIỂN THỊ EMPTY STATE NẾU CHƯA CÓ CÔNG VIỆC
-  if (!hasActiveTask) {
+  // ✅ TRẠNG THÁI 1: KHÔNG CÓ CÔNG VIỆC
+  if (taskStatus === 'empty') {
     return (
       <div className="track-task-container">
-        {/* Header */}
         <div className="track-header">
           <h1 className="track-title">Theo dõi công việc</h1>
           <p className="track-subtitle">Giám sát dịch vụ của bạn theo thời gian thực</p>
         </div>
 
-        {/* Empty State */}
         <div className="empty-state">
           <div className="empty-icon-wrapper">
             <FileText className="empty-icon" />
           </div>
           <h2 className="empty-title">Chưa có công việc nào</h2>
           <p className="empty-subtitle">
-            Hiện tại bạn chưa nhận công việc nào để theo dõi. 
+            Hiện tại bạn chưa đăng ký công việc nào để theo dõi. 
             Quay lại trang chính để tìm việc mới nhé!
           </p>
           <div className="empty-actions">
-            <button 
-              onClick={() => navigate('/')}
-              className="empty-action-btn primary"
-            >
+            <button onClick={() => navigate('/')} className="empty-action-btn primary">
               Tìm việc mới
             </button>
           </div>
@@ -52,6 +61,81 @@ export default function TrackTask() {
     );
   }
 
+  // ✅ TRẠNG THÁI 2: ĐANG CHỜ NHẬN
+  if (taskStatus === 'pending') {
+    return (
+      <div className="track-task-container">
+        <div className="track-header">
+          <div className="pending-indicator">
+            <div className="pending-dot" />
+            <span className="pending-text">Đang chờ nhận việc</span>
+          </div>
+          <h1 className="track-title">Công việc đang chờ</h1>
+          <p className="track-subtitle">Bài đăng của bạn đang được xem xét</p>
+        </div>
+
+        <div className="pending-task-card">
+          <div className="pending-job-info">
+            <div className="job-icon-wrapper">
+              <Briefcase className="job-icon" size={48} />
+            </div>
+            <div className="job-details">
+              <h2 className="job-title">{pendingTask.title}</h2>
+              <div className="job-meta">
+                <span className="meta-item">
+                  <MapPin size={16} />
+                  <span>{pendingTask.location}</span>
+                </span>
+                <span className="meta-item">
+                  <Clock size={16} />
+                  <span>{pendingTask.date} • {pendingTask.time}</span>
+                </span>
+              </div>
+              <div className="job-price">
+                <DollarSign size={20} />
+                <span>{pendingTask.budget}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="pending-stats">
+            <div className="stat-item">
+              <div className="stat-number">{pendingTask.applicantsCount}</div>
+              <div className="stat-label">Ứng viên quan tâm</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-number">⏳</div>
+              <div className="stat-label">Đang chờ nhận</div>
+            </div>
+          </div>
+
+          <div className="pending-actions">
+            <button 
+              onClick={() => navigate('/')} 
+              className="btn-secondary"
+            >
+              ← Quay lại 
+            </button>
+            <button 
+              onClick={() => navigate('/tracking')} 
+              className="btn-primary"
+            >
+              Xem chi tiết công việc
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          <div className="pending-footer">
+            <p className="footer-text">
+              Chúng tôi sẽ thông báo ngay khi có người nhận việc!
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ✅ TRẠNG THÁI 3: CÔNG VIỆC ĐANG THỰC HIỆN (ACTIVE)
   return (
     <div className="track-task-container">
       {/* Header */}
@@ -218,10 +302,7 @@ export default function TrackTask() {
           </div>
 
           {/* Complete Button */}
-          <button
-            onClick={() => navigate('/rating')}
-            className="complete-btn"
-          >
+          <button onClick={() => navigate('/rating')} className="complete-btn">
             <Check className="btn-icon" />
             Đánh dấu hoàn thành
           </button>
@@ -241,9 +322,7 @@ export default function TrackTask() {
                 Vui lòng mô tả vấn đề bạn gặp phải. Đội ngũ hỗ trợ của chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.
               </p>
               <div className="dialog-warning">
-                <p>
-                  ⚠️ Báo cáo sẽ được gửi đến đội ngũ hỗ trợ khách hàng và người làm việc liên quan.
-                </p>
+                <p>⚠️ Báo cáo sẽ được gửi đến đội ngũ hỗ trợ khách hàng và người làm việc liên quan.</p>
               </div>
               <button 
                 onClick={() => setShowReportDialog(false)}

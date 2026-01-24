@@ -114,18 +114,6 @@
   margin: 0;
 }
 
-/* Stats Section */
-.stats-section {
-  background: white;
-  border-radius: 20px;
-  padding: 48px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  margin-bottom: 80px;
-}
-
 .stat-item {
   text-align: center;
 }

@@ -18,12 +18,9 @@ export default function HeroSection({ onNavigate }: HeroSectionProps) {
         <div className="hero-content-wrapper">
           <div className="hero-header">
             <Sparkles className="sparkle-icon" />
-            <span className="welcome-text">Chào mừng trở lại!</span>
+            <span className="welcome-text">NỀN TẢNG</span>
           </div>
           
-          <h1 className="hero-title">
-            Tìm kiếm hỗ trợ cho công việc hàng ngày
-          </h1>
           
           <p className="hero-description">
             Kết nối với những người làm việc đáng tin cậy trong khu vực của bạn 

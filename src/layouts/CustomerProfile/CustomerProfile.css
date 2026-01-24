@@ -658,12 +658,29 @@
 
 .post-footer {
   display: flex;
-  gap: 24px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-top: 1px solid #e5e7eb;  /* ✅ Nhẹ nhàng hơn */
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.footer-left {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.engagement-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: 14px;
   color: #6b7280;
-  padding-top: 16px;
-  border-top: 1px solid #f3f4f6;
+  font-weight: 500;
 }
+
 
 /* Wallet */
 .wallet-grid {
@@ -1107,4 +1124,32 @@
   .payment-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ✅ VIEW APPLICANTS BUTTON */
+.view-applicants-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;     
+  background: #00BFA6;        
+  border: none;                
+  border-radius: 12px;        
+  font-size: 14px;            
+  font-weight: 600;        
+  color: white;             
+  cursor: pointer;
+  transition: all 0.3s ease;  
+  min-height: 40px;           
+}
+
+.view-applicants-btn:hover {
+  background: #00A88F;         
+  transform: translateY(-1px); 
+  box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3);
+}
+
+.view-applicants-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 191, 166, 0.2);
 }

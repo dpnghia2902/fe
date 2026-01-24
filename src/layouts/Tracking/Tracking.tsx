@@ -91,7 +91,7 @@ export default function Tracking() {
 
   const handleSuccessClose = () => {
     setShowSuccessModal(false);
-    navigate('/dashboard');
+    navigate('/');
   };
 
   if (loading) {
@@ -304,9 +304,9 @@ export default function Tracking() {
             <div className="success-icon">
               <CheckCircle2 size={64} />
             </div>
-            <h3 className="success-title">Nhận việc thành công!</h3>
+            <h3 className="success-title">Đăng kí thành công!</h3>
             <p className="success-description">
-              Chúng tôi đã thông báo cho khách hàng. Bạn sẽ nhận được cập nhật tiến độ.
+              Chúng tôi đã thông báo cho khách hàng.
             </p>
             <button 
               className="success-btn"

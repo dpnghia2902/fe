@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   User, Wallet, History, HeadphonesIcon, Edit2, Star, MapPin, 
   Phone, Mail, CreditCard, DollarSign, Calendar, LogOut, FileText, Check,
-  ShieldCheck 
+  ShieldCheck, Eye, Edit, Users, ChevronRight , Clock
 } from 'lucide-react';
 import './CustomerProfile.css';
 
@@ -23,16 +23,50 @@ const myPosts = [
   {
     id: '1',
     userName: 'Nguyễn Văn A',
-    location: 'Quận 1, TP.HCM',
-    timeAgo: '2 ngày trước',
+    userInitials: 'NVA',
+    title: 'Cần 3 người hỗ trợ dọn dẹp nhà cửa',
+    description: 'Dọn dẹp tổng thể căn hộ 80m2, có 2 phòng ngủ, 1 phòng khách, bếp và vệ sinh.',
     serviceCategory: 'Dọn dẹp',
-    budget: '150.000₫ - 200.000₫',
-    content: 'Mình cần tìm người giúp dọn dẹp nhà cửa cho căn hộ 3 phòng ngủ. Yêu cầu kinh nghiệm và mang theo dụng cụ dọn dẹp.',
+    peopleNeeded: 3,
+    budget: '250.000₫/người',
+    location: '123 Trần Duy Hưng, Q.Cầu Giấy',
+    date: '25/01/2026',
+    time: '09:00',
+    status: 'open',
+    urgency: 'normal',
+    createdAt: '24/01/2026',
+    applicants: [
+      { id: 1, name: 'Trần Thị B', status: 'pending' },
+      { id: 2, name: 'Lê Văn C', status: 'accepted' }
+    ],
+    views: 127,
     likes: 12,
-    comments: 5,
-    shares: 2
+    comments: 3,
+    shares: 1
+  },
+  {
+    id: '2',
+    userName: 'Nguyễn Văn A',
+    userInitials: 'NVA',
+    title: 'Cần thợ sửa ống nước gấp ⚡',
+    description: 'Ống nước phòng tắm bị rò rỉ, cần thợ có kinh nghiệm xử lý ngay trong hôm nay.',
+    serviceCategory: 'Sửa chữa',
+    peopleNeeded: 1,
+    budget: '500.000₫',
+    location: '456 Nguyễn Trãi, Q.Thanh Xuân',
+    date: '24/01/2026',
+    time: '14:00',
+    status: 'filled',
+    urgency: 'urgent',
+    createdAt: '23/01/2026',
+    applicants: [{ id: 3, name: 'Phạm Văn D', status: 'accepted' }],
+    views: 89,
+    likes: 8,
+    comments: 2,
+    shares: 0
   }
 ];
+
 
 export default function CustomerProfile() {
   const navigate = useNavigate();
@@ -291,42 +325,101 @@ export default function CustomerProfile() {
             <div className="posts-header">
               <div>
                 <h2 className="posts-title">Bài đăng của tôi</h2>
-                <p className="posts-subtitle">Quản lý tất cả bài đăng của bạn trên feed</p>
+                <p className="posts-subtitle">
+                  Quản lý {myPosts.length} bài đăng công việc của bạn
+                </p>
               </div>
-              <span className="posts-count">{myPosts.length} bài đăng</span>
+              <div className="posts-stats">
+                <span className="posts-count">{myPosts.length} bài</span>
+                <span className="applicants-total">
+                  {myPosts.reduce((sum, post) => sum + (post.applicants?.length || 0), 0)} ứng viên
+                </span>
+              </div>
             </div>
 
             {myPosts.length === 0 ? (
               <div className="empty-posts">
                 <FileText className="empty-icon" />
                 <h3 className="empty-title">Chưa có bài đăng nào</h3>
-                <p className="empty-text">Bạn chưa tạo bài đăng nào trên feed</p>
-                <button className="create-post-btn">Tạo bài đăng đầu tiên</button>
+                <p className="empty-text">
+                  Bạn chưa tạo bài đăng công việc nào. 
+                  <br />Đăng bài để nhận ứng viên ngay!
+                </p>
+                <button className="create-post-btn">📤 Đăng việc mới</button>
               </div>
             ) : (
               <div className="posts-list">
                 {myPosts.map((post) => (
                   <div key={post.id} className="post-card">
+                    {/* Post Header */}
                     <div className="post-header">
                       <div className="post-author">
-                        <div className="post-avatar">NVA</div>
+                        <div className="post-avatar">{post.userInitials}</div>
                         <div>
                           <h4 className="post-author-name">{post.userName}</h4>
-                          <p className="post-meta">{post.location} • {post.timeAgo}</p>
+                          <p className="post-meta">
+                            {post.location} • {post.createdAt} •{' '}
+                            <span className={`status-badge ${post.status}`}>
+                              {post.status === 'open' ? 'Đang tuyển' : 
+                              post.status === 'filled' ? 'Đủ người' : 'Hoàn thành'}
+                            </span>
+                          </p>
                         </div>
                       </div>
+                      <div className="post-actions">
+                        <button className="action-btn view" title="Xem chi tiết">
+                          <Eye size={16} />
+                        </button>
+                        <button className="action-btn edit" title="Sửa">
+                          <Edit size={16} />
+                        </button>
+                      </div>
                     </div>
+
+                    {/* Post Content */}
                     <div className="post-content">
                       <div className="post-tags">
                         <span className="post-category">{post.serviceCategory}</span>
+                        <span className="post-people">{post.peopleNeeded} người</span>
                         <span className="post-budget">{post.budget}</span>
+                        <span className={`post-urgency ${post.urgency}`}>
+                          {post.urgency === 'urgent' ? '⚡ Gấp' : 'Thường'}
+                        </span>
                       </div>
-                      <p className="post-text">{post.content}</p>
+                      <h3 className="post-title">{post.title}</h3>
+                      <p className="post-description">{post.description}</p>
                     </div>
+
+                    {/* Job Details */}
+                    <div className="job-details-row">
+                      <div className="detail-item">
+                        <MapPin size={16} />
+                        <span>{post.location}</span>
+                      </div>
+                      <div className="detail-item">
+                        <Clock size={16} />
+                        <span>{post.date} {post.time}</span>
+                      </div>
+                      <div className="detail-item">
+                        <Users size={16} />
+                        <span>{post.applicants?.length || 0}/{post.peopleNeeded} ứng viên</span>
+                      </div>
+                    </div>
+
+                    {/* Post Footer */}
                     <div className="post-footer">
-                      <span>❤️ {post.likes}</span>
-                      <span>💬 {post.comments}</span>
-                      <span>🔗 {post.shares}</span>
+                      <div className="footer-left">
+                        <span className="engagement-item">
+                          <Users size={16} /> {post.applicants?.length || 0} ứng viên
+                        </span>
+                        <span className="engagement-item">
+                          👁️ {post.views || 0} lượt xem
+                        </span>
+                      </div>
+                      <button className="view-applicants-btn">
+                        Xem ứng viên ({post.applicants?.length || 0})
+                        <ChevronRight size={18} />
+                      </button>
                     </div>
                   </div>
                 ))}

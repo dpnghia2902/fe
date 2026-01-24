@@ -46,7 +46,7 @@ export default function CreateTask() {
     budget: '',
     date: '',
     time: '',
-    peopleNeeded: '2', // ✅ DEFAULT 2 NGƯỜI
+    peopleNeeded: '2', 
   });
   const [files, setFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
