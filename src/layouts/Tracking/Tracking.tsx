@@ -175,7 +175,6 @@ export default function Tracking() {
         {/* Tabs */}
         <div className="content-tabs">
           <button className="tab active">Chi tiết công việc</button>
-          <button className="tab">Đánh giá (12)</button>
           <button className="tab">Vị trí</button>
         </div>
 
